@@ -1,14 +1,5 @@
 //*********************************************************
 //
-// Jose M Vela Jr
-// Operating Systems
-// Project #1: New Island Shell - Writing Your Own Shell
-//
-//*********************************************************
-
-
-//*********************************************************
-//
 // Includes and Defines
 //
 //*********************************************************
@@ -20,6 +11,8 @@
 #include <string.h>
 #include <cstdlib>
 #include <sys/wait.h>
+#include <cstring>
+#include <stdio.h>
 using namespace std;
 char history[10];
 //*********************************************************
@@ -27,10 +20,6 @@ char history[10];
 // Class Declarations
 //
 //*********************************************************
-#include <iostream>
-#include <cstring>
-#include <stdio.h>
-using namespace std;
 class hist 
 {
    private:
@@ -92,17 +81,7 @@ extern "C"
 {
   extern char **gettoks();
 } 
-/*void hist(char *argv[]) //stores argv tokens into array
-{
-if(strcmp(argv[0], "history") == 0)
-    {
-       for(int n = 0; n < 10 ; n++) 
-        {
-        if(history[n] != NULL)
-			cout << (n, history[n]);
-        }
-    }
-}*/
+
 void exe(char** argc) //shell fork function
 {
 pid_t pid;
@@ -117,20 +96,8 @@ else if( pid == 0) //extant child
 	}
 	wait(&status); //waits for child function to complete
 	int i = 0; 
-	//while (argc[i] != NULL )
-	//{
 	commands.add(argc[i]);
-		//++i;
-	//}
 }
-/*void hist() //prints the array 0-9
-{
-    for(int n = 0; n < 9 ; n++) 
-        {
-        if(history[n] != NULL)
-			cout << (n, history[n]);
-        }
-    }
 */
 //*********************************************************
 //
@@ -152,7 +119,7 @@ int main( int argc, char *argv[] )
   while( true )
     {
       // get arguments
-	  cout << "JojoShell>";
+	  cout << "Shell>";
       toks = gettoks();
       //if( toks[0] != NULL )
 		  // simple loop to echo all arguments
@@ -164,22 +131,10 @@ int main( int argc, char *argv[] )
 		{
 			break;
 		}
-		/*if( !strcmp( toks[0], "progname" )) //progname function, but I can't find any documentation on what progname does
-			progname(toks[1]);*/
 		else if( !strcmp( toks[0], "hist" )) //history function
 		{
 			commands.display();
 		}
-		/*else if( !strcmp( toks[0], "r" )) //r n function
-		{
-			if (toks[1] != NULL)
-			{
-				char hold[100];
-				int htoken = atoi(toks[1]); //if n, n of history list
-				commands.get(htoken, hold);
-				exe(toks);
-			}
-		}*/
 	else
 		exe(toks);
 	}
